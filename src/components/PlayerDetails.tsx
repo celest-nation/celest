@@ -9,6 +9,54 @@ import { useSendInput } from '../hooks/sendInput';
 import { Player } from '../../convex/aiTown/player';
 import { GameId } from '../../convex/aiTown/ids';
 import { ServerGame } from '../hooks/serverGame';
+import { agentWallets } from '../../data/characters';
+import { useState, useEffect } from 'react';
+import { JsonRpcProvider, formatEther } from 'ethers';
+
+const MONAD_RPC = 'https://mainnet.monad.xyz/v1';
+
+function WalletInfo({ address }: { address: string }) {
+  const [balance, setBalance] = useState<string | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    async function fetchBalance() {
+      try {
+        const provider = new JsonRpcProvider(MONAD_RPC);
+        const raw = await provider.getBalance(address);
+        if (!cancelled) setBalance(formatEther(raw));
+      } catch {
+        if (!cancelled) setBalance('—');
+      }
+    }
+    fetchBalance();
+    const interval = setInterval(fetchBalance, 30_000);
+    return () => {
+      cancelled = true;
+      clearInterval(interval);
+    };
+  }, [address]);
+
+  const short = `${address.slice(0, 6)}...${address.slice(-4)}`;
+  const explorerUrl = `https://monadexplorer.com/address/${address}`;
+
+  return (
+    <div className="wallet-info">
+      <div className="wallet-info-row">
+        <span className="wallet-info-label">Wallet</span>
+        <a href={explorerUrl} target="_blank" rel="noopener" className="wallet-info-address">
+          {short} ↗
+        </a>
+      </div>
+      <div className="wallet-info-row">
+        <span className="wallet-info-label">Balance</span>
+        <span className="wallet-info-balance">
+          {balance === null ? '...' : `${(parseFloat(balance) || 0).toFixed(4)} MON`}
+        </span>
+      </div>
+    </div>
+  );
+}
 
 export default function PlayerDetails({
   worldId,
@@ -131,12 +179,16 @@ export default function PlayerDetails({
   //   [...inflightInputs.values()].find((i) => i.name === inputName) ? ' opacity-50' : '';
 
   const pendingSuffix = (s: string) => '';
+
+  const agentName = playerDescription?.name ?? '';
+  const walletAddress = agentWallets[agentName] ?? null;
+
   return (
     <>
       <div className="flex gap-4">
         <div className="box w-3/4 sm:w-full mr-auto">
           <h2 className="bg-brown-700 p-2 font-display text-2xl sm:text-4xl tracking-wider shadow-solid text-center">
-            {playerDescription?.name}
+            {agentName}
           </h2>
         </div>
         <a
@@ -148,6 +200,7 @@ export default function PlayerDetails({
           </h2>
         </a>
       </div>
+      {walletAddress && <WalletInfo address={walletAddress} />}
       {canInvite && (
         <a
           className={

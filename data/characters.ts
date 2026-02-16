@@ -66,6 +66,14 @@ export const Descriptions = [
   // },
 ];
 
+export const agentWallets: Record<string, string> = {
+  Lucky: '0xa4b20127b8fffF86F0A36c92eb8b537325a8dFa6',
+  Bob: '0x56f78642c3755E6A9A85bc8866c525CbfE72050d',
+  Stella: '0x6313802e17cB94255A4f2A21e1fa319641EE5325',
+  Alice: '0x00857C1D678B069934F7eb06827323b6b7b6ccBE',
+  Pete: '0xd3477012cb081F63780D07C8359C961C9591C976',
+};
+
 export const characters = [
   {
     name: 'f1',
