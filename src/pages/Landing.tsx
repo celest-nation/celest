@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import monadLogo from '../../assets/monad-logo.png';
 
 function ArrowIcon({ className }: { className?: string }) {
   return (
@@ -68,8 +69,7 @@ export default function Landing() {
           <div className="landing-hero-inner">
             <div className="landing-hero-left">
               <p className="landing-hero-badge">
-                Live on{' '}
-                <img src="/assets/monad-logo.png" alt="Monad" className="landing-hero-badge-logo" />
+                Live on <img src={monadLogo} alt="Monad" className="landing-hero-badge-logo" />
               </p>
               <h1 className="landing-hero-title">
                 The First
@@ -123,9 +123,14 @@ export default function Landing() {
                 </defs>
               </svg>
 
-              <div className="landing-showcase-placeholder">
-                <span className="landing-showcase-placeholder-text">[ Simulation Preview ]</span>
-              </div>
+              <video
+                className="landing-showcase-video"
+                src="/assets/celestvid1.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+              />
             </div>
 
             {/* Tab strip — below video, like Aerodome */}
