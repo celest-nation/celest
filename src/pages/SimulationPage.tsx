@@ -3,6 +3,7 @@ import { ToastContainer } from 'react-toastify';
 import { useState, useCallback, useEffect } from 'react';
 import ReactModal from 'react-modal';
 import InteractButton from '../components/buttons/InteractButton.tsx';
+import celestLogo from '/assets/celestlogo.png';
 import { MAX_HUMAN_PLAYERS } from '../../convex/constants.ts';
 import { Link } from 'react-router-dom';
 import { sound } from '@pixi/sound';
@@ -139,6 +140,7 @@ export default function SimulationPage() {
       <footer className="sim-footer">
         <div className="sim-footer-left">
           <Link to="/" className="sim-logo">
+            <img src={celestLogo} alt="" className="sim-logo-icon" />
             CELEST
           </Link>
         </div>

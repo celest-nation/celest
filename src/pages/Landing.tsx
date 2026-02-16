@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import monadLogo from '../../assets/monad-logo.png';
+import celestLogo from '/assets/celestlogo.png';
 
 function ArrowIcon({ className }: { className?: string }) {
   return (
@@ -47,6 +48,7 @@ export default function Landing() {
         <header className="landing-header">
           <div className="landing-header-inner">
             <Link to="/" className="landing-logo">
+              <img src={celestLogo} alt="" className="landing-logo-icon" />
               CELEST
             </Link>
 
@@ -276,7 +278,10 @@ export default function Landing() {
                 <p className="landing-footer-cta-text">Enter the Nation</p>
                 <span className="landing-footer-copy">&copy; 2025 Celest</span>
               </div>
-              <span className="landing-footer-wordmark">CELEST</span>
+              <span className="landing-footer-wordmark">
+                <img src={celestLogo} alt="" className="landing-footer-wordmark-icon" />
+                CELEST
+              </span>
             </div>
           </div>
         </footer>
